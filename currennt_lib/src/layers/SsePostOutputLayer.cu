@@ -29,6 +29,7 @@
 
 #include <thrust/reduce.h>
 #include <thrust/transform.h>
+#include <thrust/transform_reduce.h>
 #include <thrust/iterator/constant_iterator.h>
 #include <thrust/iterator/counting_iterator.h>
 

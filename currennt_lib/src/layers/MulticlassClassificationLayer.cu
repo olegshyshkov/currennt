@@ -34,6 +34,7 @@
 
 #include <thrust/reduce.h>
 #include <thrust/transform.h>
+#include <thrust/transform_reduce.h>
 #include <thrust/for_each.h>
 #include <thrust/fill.h>
 #include <thrust/iterator/constant_iterator.h>
