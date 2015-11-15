@@ -33,6 +33,7 @@
 #include "layers/WeightedSsePostOutputLayer.hpp"
 #include "layers/BinaryClassificationLayer.hpp"
 #include "layers/MulticlassClassificationLayer.hpp"
+#include "layers/CtcPostOutputLayer.hpp"
 #include "activation_functions/Tanh.cuh"
 #include "activation_functions/Logistic.cuh"
 #include "activation_functions/Identity.cuh"
@@ -63,11 +64,12 @@ layers::Layer<TDevice>* LayerFactory<TDevice>::createLayer(
     	return new LstmLayer<TDevice>(layerChild, weightsSection, *precedingLayer, false);
     else if (layerType == "blstm")
     	return new LstmLayer<TDevice>(layerChild, weightsSection, *precedingLayer, true);
-    else if (layerType == "sse" || layerType == "weightedsse" || layerType == "rmse" || layerType == "ce" || layerType == "wf" || layerType == "binary_classification" || layerType == "multiclass_classification") {
+    else if (layerType == "sse" || layerType == "weightedsse" || layerType == "rmse" || layerType == "ce" || layerType == "wf" || layerType == "binary_classification" || layerType == "multiclass_classification" || layerType == "ctc") {
         //layers::TrainableLayer<TDevice>* precedingTrainableLayer = dynamic_cast<layers::TrainableLayer<TDevice>*>(precedingLayer);
         //if (!precedingTrainableLayer)
     	//    throw std::runtime_error("Cannot add post output layer after a non trainable layer");
-
+        if (layerType == "ctc")
+            return new CtcPostOutputLayer<TDevice>(layerChild, *precedingLayer);
         if (layerType == "sse")
     	    return new SsePostOutputLayer<TDevice>(layerChild, *precedingLayer);
         else if (layerType == "weightedsse")
